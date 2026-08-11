@@ -1,0 +1,32 @@
+A = [6, 7, 8, 1, 2, 3, 4]
+target = 2
+
+low = 0
+high = len(A) - 1
+
+while low <= high:
+
+    mid = (low + high) // 2
+
+    if A[mid] == target:
+        print("Index =", mid)
+        break
+
+    # Left half is sorted
+    if A[low] <= A[mid]:
+
+        if A[low] <= target < A[mid]:
+            high = mid - 1
+        else:
+            low = mid + 1
+
+    # Right half is sorted
+    else:
+
+        if A[mid] < target <= A[high]:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+else:
+    print("Element not found")
