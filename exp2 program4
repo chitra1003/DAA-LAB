@@ -1,0 +1,47 @@
+def merge_sort_count(A):
+
+    if len(A) <= 1:
+        return A, 0
+
+    mid = len(A) // 2
+
+    left, count_left = merge_sort_count(A[:mid])
+    right, count_right = merge_sort_count(A[mid:])
+
+    result = []
+    i = 0
+    j = 0
+    count = count_left + count_right
+
+    while i < len(left) and j < len(right):
+
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+
+        else:
+            result.append(right[j])
+
+            # All remaining elements in left
+            # will form inversions with right[j]
+            count += len(left) - i
+
+            j += 1
+
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+
+    return result, count
+
+
+A = [8, 4, 2, 1]
+
+sorted_array, inversions = merge_sort_count(A)
+
+print("Sorted Array =", sorted_array)
+print("Number of Inversions =", inversions)
