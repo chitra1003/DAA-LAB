@@ -1,0 +1,38 @@
+def can_allocate(books, students, limit):
+    count = 1
+    pages = 0
+
+    for book in books:
+        if pages + book > limit:
+            count += 1
+            pages = book
+        else:
+            pages += book
+
+    return count <= students
+
+
+def minimum_pages(books, students):
+    if students > len(books):
+        return -1
+
+    low = max(books)
+    high = sum(books)
+    answer = high
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if can_allocate(books, students, mid):
+            answer = mid
+            high = mid - 1
+        else:
+            low = mid + 1
+
+    return answer
+
+
+books = [12, 34, 67, 90]
+students = 2
+
+print("Minimum maximum pages:", minimum_pages(books, students))
