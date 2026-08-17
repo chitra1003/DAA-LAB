@@ -1,0 +1,60 @@
+# Conventional Matrix Multiplication
+def multiply(A, B):
+    n = len(A)
+    C = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                C[i][j] += A[i][k] * B[k][j]
+
+    return C
+
+
+# Strassen's Algorithm
+def strassen(A, B):
+    n = len(A)
+
+    if n == 1:
+        return [[A[0][0] * B[0][0]]]
+
+    m = n // 2
+
+    A11 = [row[:m] for row in A[:m]]
+    A12 = [row[m:] for row in A[:m]]
+    A21 = [row[:m] for row in A[m:]]
+    A22 = [row[m:] for row in A[m:]]
+
+    B11 = [row[:m] for row in B[:m]]
+    B12 = [row[m:] for row in B[:m]]
+    B21 = [row[:m] for row in B[m:]]
+    B22 = [row[m:] for row in B[m:]]
+
+    def add(X, Y):
+        return [[X[i][j] + Y[i][j] for j in range(m)] for i in range(m)]
+
+    def sub(X, Y):
+        return [[X[i][j] - Y[i][j] for j in range(m)] for i in range(m)]
+
+    P1 = strassen(add(A11, A22), add(B11, B22))
+    P2 = strassen(add(A21, A22), B11)
+    P3 = strassen(A11, sub(B12, B22))
+    P4 = strassen(A22, sub(B21, B11))
+    P5 = strassen(add(A11, A12), B22)
+    P6 = strassen(sub(A21, A11), add(B11, B12))
+    P7 = strassen(sub(A12, A22), add(B21, B22))
+
+    C11 = add(sub(add(P1, P4), P5), P7)
+    C12 = add(P3, P5)
+    C21 = add(P2, P4)
+    C22 = add(sub(add(P1, P3), P2), P6)
+
+    return [C11[i] + C12[i] for i in range(m)] + \
+           [C21[i] + C22[i] for i in range(m)]
+
+
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+
+print("Conventional:", multiply(A, B))
+print("Strassen:", strassen(A, B))
