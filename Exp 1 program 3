@@ -1,0 +1,37 @@
+def majority_element(arr):
+    candidate = None
+    count = 0
+
+    for num in arr:
+
+        if count == 0:
+            candidate = num
+            count = 1
+
+        elif num == candidate:
+            count = count + 1
+
+        else:
+            count = count - 1
+
+    count = 0
+
+    for num in arr:
+        if num == candidate:
+            count = count + 1
+
+    if count > len(arr) // 2:
+        return candidate
+    else:
+        return None
+
+
+# Main
+arr = [2, 2, 1, 1, 2, 3, 2, 2]
+
+result = majority_element(arr)
+
+if result is not None:
+    print("Majority Element:", result)
+else:
+    print("No Majority Element")
