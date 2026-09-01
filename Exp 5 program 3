@@ -1,0 +1,26 @@
+import heapq
+
+def merge(arrays):
+    heap = []
+    result = []
+
+    for i in range(len(arrays)):
+        if arrays[i]:
+            heapq.heappush(heap, (arrays[i][0], i, 0))
+
+    while heap:
+        val, i, j = heapq.heappop(heap)
+        result.append(val)
+
+        if j + 1 < len(arrays[i]):
+            heapq.heappush(heap, (arrays[i][j+1], i, j+1))
+
+    return result
+
+k = int(input("Number of arrays: "))
+arrays = []
+
+for i in range(k):
+    arrays.append(list(map(int, input().split())))
+
+print("Merged:", merge(arrays))
