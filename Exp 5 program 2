@@ -1,0 +1,29 @@
+import heapq
+from collections import Counter
+
+def rearrange(s):
+    freq = Counter(s)
+    heap = [(-v, k) for k, v in freq.items()]
+    heapq.heapify(heap)
+
+    ans = []
+    prev = (0, '')
+
+    while heap:
+        count, ch = heapq.heappop(heap)
+        ans.append(ch)
+
+        if prev[0] < 0:
+            heapq.heappush(heap, prev)
+
+        count += 1
+        prev = (count, ch)
+
+    result = ''.join(ans)
+
+    if len(result) != len(s):
+        return "Not possible"
+    return result
+
+s = input("Enter string: ")
+print("Result:", rearrange(s))
