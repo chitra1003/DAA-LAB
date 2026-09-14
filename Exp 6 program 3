@@ -1,0 +1,22 @@
+def at_most(a, k):
+    left = count = 0
+    freq = {}
+
+    for right in range(len(a)):
+        freq[a[right]] = freq.get(a[right], 0) + 1
+
+        while len(freq) > k:
+            freq[a[left]] -= 1
+            if freq[a[left]] == 0:
+                del freq[a[left]]
+            left += 1
+
+        count += right - left + 1
+
+    return count
+
+
+a = list(map(int, input("Enter array: ").split()))
+k = int(input("Enter K: "))
+
+print("Number of subarrays:", at_most(a, k) - at_most(a, k - 1))
