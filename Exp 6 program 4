@@ -1,0 +1,14 @@
+import heapq
+
+a = list(map(int, input("Enter array: ").split()))
+k = int(input("Enter K: "))
+
+heap = [-x for x in a]
+heapq.heapify(heap)
+
+for _ in range(k):
+    x = -heapq.heappop(heap)
+    x = (x + 1) // 2
+    heapq.heappush(heap, -x)
+
+print("Minimum sum:", -sum(heap))
