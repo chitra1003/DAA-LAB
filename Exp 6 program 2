@@ -1,0 +1,17 @@
+def bucket_sort(a):
+    n = len(a)
+    buckets = [[] for _ in range(n)]
+
+    for x in a:
+        buckets[int(x * n)].append(x)
+
+    result = []
+    for b in buckets:
+        b.sort()
+        result += b
+
+    return result
+
+
+a = list(map(float, input("Enter values (0 to 1): ").split()))
+print("Sorted array:", bucket_sort(a))
