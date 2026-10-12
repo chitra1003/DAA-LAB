@@ -1,0 +1,29 @@
+class Node:
+    def __init__(self, d):
+        self.d = d
+        self.l = self.r = None
+
+def insert(root, d):
+    if root is None:
+        return Node(d)
+    if d < root.d:
+        root.l = insert(root.l, d)
+    else:
+        root.r = insert(root.r, d)
+    return root
+
+def lca(root, a, b):
+    while root:
+        if a < root.d and b < root.d:
+            root = root.l
+        elif a > root.d and b > root.d:
+            root = root.r
+        else:
+            return root.d
+
+root = None
+for x in map(int, input("Enter BST values: ").split()):
+    root = insert(root, x)
+
+a, b = map(int, input("Enter two nodes: ").split())
+print("LCA:", lca(root, a, b))
