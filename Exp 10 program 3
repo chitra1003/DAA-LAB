@@ -1,0 +1,25 @@
+
+import heapq
+
+n, m = map(int, input("Vertices and edges: ").split())
+g = [[] for _ in range(n)]
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    g[u].append((v, w))
+    g[v].append((u, w))
+
+s, t = map(int, input("Source and destination: ").split())
+b = [-1] * n
+b[s] = float('inf')
+q = [(-b[s], s)]
+
+while q:
+    neg, u = heapq.heappop(q)
+    for v, w in g[u]:
+        x = min(-neg, w)
+        if x > b[v]:
+            b[v] = x
+            heapq.heappush(q, (-x, v))
+
+print("Bottleneck:", b[t])
