@@ -1,0 +1,9 @@
+import math
+
+def count(h):
+    if h == 0:
+        return 0
+    return 2**h - 1
+
+h = int(input("Height of complete tree: "))
+print("Nodes:", count(h))
