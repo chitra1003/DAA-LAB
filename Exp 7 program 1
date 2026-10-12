@@ -1,0 +1,29 @@
+def hash_table(keys, tableSize, searchKey, method):
+    if method == "chaining":
+        table = [[] for i in range(tableSize)]
+        for key in keys:
+            index = key % tableSize
+            table[index].append(key)
+        index = searchKey % tableSize
+        if searchKey in table[index]:
+            return 1
+        else:
+            return 0
+    else:
+        table = [None] * tableSize
+        for key in keys:
+            index = key % tableSize
+            for i in range(tableSize):
+                if table[index] == None:
+                    table[index] = key
+                    break
+                index = (index + 1) % tableSize
+        for i in range(tableSize):
+            if table[index] == searchKey:
+                return 1
+            if table[index] is None:
+                return 0
+            index = (index + 1) % tableSize
+        return 0
+
+print(hash_table(keys, tableSize, searchKey, method))
