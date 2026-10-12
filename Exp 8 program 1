@@ -1,0 +1,25 @@
+class Node:
+    def __init__(self, d):
+        self.d = d
+        self.l = self.r = None
+
+def insert(root, d):
+    if root is None:
+        return Node(d)
+    if d < root.d:
+        root.l = insert(root.l, d)
+    else:
+        root.r = insert(root.r, d)
+    return root
+
+def inorder(root):
+    if root:
+        inorder(root.l)
+        print(root.d, end=" ")
+        inorder(root.r)
+
+root = None
+for x in map(int, input("Enter values: ").split()):
+    root = insert(root, x)
+
+inorder(root)
