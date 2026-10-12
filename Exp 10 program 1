@@ -1,0 +1,27 @@
+
+import heapq
+
+n = int(input("Vertices: "))
+m = int(input("Edges: "))
+g = [[] for _ in range(n)]
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    g[u].append((v, w))
+    g[v].append((u, w))
+
+s = int(input("Source: "))
+d = [float('inf')] * n
+d[s] = 0
+q = [(0, s)]
+
+while q:
+    cost, u = heapq.heappop(q)
+    if cost != d[u]:
+        continue
+    for v, w in g[u]:
+        if d[v] > cost + w:
+            d[v] = cost + w
+            heapq.heappush(q, (d[v], v))
+
+print(d)
