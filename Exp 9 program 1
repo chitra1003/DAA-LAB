@@ -1,0 +1,19 @@
+n = int(input("Vertices: "))
+g = [list(map(int, input().split())) for _ in range(n)]
+vis = [False] * n
+vis[0] = True
+cost = 0
+
+for _ in range(n-1):
+    m, u, v = float('inf'), -1, -1
+    for i in range(n):
+        for j in range(n):
+            if vis[i] and not vis[j] and 0 < g[i][j] < m:
+                m, u, v = g[i][j], i, j
+    if u == -1:
+        break
+    vis[v] = True
+    cost += m
+    print(u, "-", v, ":", m)
+
+print("MST Cost:", cost)
