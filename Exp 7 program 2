@@ -1,0 +1,16 @@
+def relative_sort(A, B):
+    result = []
+
+    for x in B:
+        for i in range(A.count(x)):
+            result.append(x)
+        A = [y for y in A if y != x]
+
+    result.extend(sorted(A))
+    return result
+
+
+A = list(map(int, input("Enter array A: ").split()))
+B = list(map(int, input("Enter array B: ").split()))
+
+print("Relative sorted array:", relative_sort(A, B))
