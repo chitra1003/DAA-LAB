@@ -1,0 +1,19 @@
+
+n, m = map(int, input("Cities and roads: ").split())
+limit = int(input("Threshold: "))
+d = [[float('inf')] * n for _ in range(n)]
+
+for i in range(n):
+    d[i][i] = 0
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    d[u][v] = d[v][u] = w
+
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            d[i][j] = min(d[i][j], d[i][k] + d[k][j])
+
+counts = [sum(x <= limit for x in row) - 1 for row in d]
+print("City:", min(range(n), key=lambda i: (counts[i], -i)))
