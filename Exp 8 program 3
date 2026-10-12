@@ -1,0 +1,31 @@
+class Node:
+    def __init__(self, d):
+        self.d = d
+        self.l = self.r = None
+
+def largest(root):
+    if not root:
+        return 0, float('inf'), float('-inf')
+
+    a, b, c = largest(root.l)
+    x, y, z = largest(root.r)
+
+    if c < root.d < y:
+        return a+x+1, min(b, root.d), max(z, root.d)
+
+    return max(a, x), float('-inf'), float('inf')
+
+def insert(root, d):
+    if not root:
+        return Node(d)
+    if d < root.d:
+        root.l = insert(root.l, d)
+    else:
+        root.r = insert(root.r, d)
+    return root
+
+root = None
+for v in map(int, input("Enter values: ").split()):
+    root = insert(root, v)
+
+print("Largest BST size:", largest(root)[0])
