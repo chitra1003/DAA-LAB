@@ -1,0 +1,22 @@
+
+n, m = map(int, input("Vertices and edges: ").split())
+edges = []
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    edges.append((u, v, w))
+
+s = int(input("Source: "))
+d = [float('inf')] * n
+d[s] = 0
+
+for _ in range(n - 1):
+    for u, v, w in edges:
+        if d[u] != float('inf') and d[u] + w < d[v]:
+            d[v] = d[u] + w
+
+if any(d[u] != float('inf') and d[u] + w < d[v]
+       for u, v, w in edges):
+    print("Negative cycle exists")
+else:
+    print(d)
